@@ -11,15 +11,28 @@ const App = ({ props }) => {
     async function createMap() {
       await ymaps.ready(function () {
         var myMap = new ymaps.Map("YMapsID", {
-          center: [55.76, 37.64],
-          zoom: 10,
+          center: [56.821932, 60.563563],          
+          zoom: 15,
         });
-      });
 
+        var myGeoObj = new ymaps.GeoObject({
+          geometry: {
+              type: "Point", // тип геометрии - точка
+              coordinates: [56.818710, 60.564902] // координаты точки
+          }
+        });
+
+      myMap.geoObjects.add(myGeoObj); 
+
+      console.log('myGeoObj', myGeoObj);
+
+      });
+      
       console.log("ymaps", ymaps);
     }
 
     createMap();
+    
   }, []);
 
   return (
