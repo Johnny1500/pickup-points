@@ -33,6 +33,11 @@ module.exports = {
     assetModuleFilename: 'assets/[hash][ext][query]',
     clean: true,
   },
+
+  externals: {
+    "ymaps": "ymaps"
+  },
+
   module: {
     rules: [
       { test: /\.(html)$/, use: ["html-loader"] },

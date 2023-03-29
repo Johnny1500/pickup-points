@@ -1,34 +1,31 @@
 import React, { useEffect, useState } from "react";
 import * as data from "../data.json";
+import * as ymaps from "ymaps";
 
 const { pickPoints } = data;
-// console.log('pickPoints', pickPoints);
-
-// useEffect(async () => {
-//   const [ymaps3React] = await Promise.all([
-//     ymaps3.import("@yandex/ymaps3-reactify"),
-//     ymaps3.ready,
-//   ]);
-
-//   console.log("ymaps3React", ymaps3React);
-// }, []);
 
 const App = ({ props }) => {
-  
   useEffect(() => {
-    console.log('mounted');
-    // const [ymaps3React] = await Promise.all([
-    //   ymaps3.import("@yandex/ymaps3-reactify"),
-    //   ymaps3.ready,
-    // ]);
-  
-    // console.log("ymaps3React", ymaps3React);
+    console.log("mounted");
+
+    async function createMap() {
+      await ymaps.ready(function () {
+        var myMap = new ymaps.Map("YMapsID", {
+          center: [55.76, 37.64],
+          zoom: 10,
+        });
+      });
+
+      console.log("ymaps", ymaps);
+    }
+
+    createMap();
   }, []);
 
   return (
     <main>
-      <div className="card-container" id="YMapsID"></div>
-      <div className="map"></div>
+      <div className="card-container"></div>
+      <div className="map" id="YMapsID"></div>
     </main>
   );
 };
