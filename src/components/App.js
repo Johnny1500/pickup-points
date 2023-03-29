@@ -1,9 +1,14 @@
 import React from 'react'
 
 const App = ({ props }) => (
-  <div>
-    Pickup points
-  </div>
+  <main>
+    <div className='card-container'>
+
+    </div>
+    <div className='map'>
+      
+    </div>
+  </main>
 )
 
 export default App
