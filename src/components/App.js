@@ -1,53 +1,78 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, createContext } from "react";
 import * as data from "../data.json";
 import * as ymaps from "ymaps";
+import Card from "./Card";
+import Badge from "./Badge";
 
 const { pickPoints } = data;
+console.log("pickPoints", pickPoints);
 
-const App = ({ props }) => {
+const App = () => {
+  const [currentPickupPoint, setCurrentPickupPoint] = useState({
+    latitude: 56.80245,
+    longitude: 60.604913,
+  });
+
   useEffect(() => {
-    console.log("mounted");
+    console.log("currentPickupPoint", currentPickupPoint);
+  });
 
-    async function createMap() {
-      await ymaps.ready(function () {
-        var myMap = new ymaps.Map("YMapsID", {
-          center: [56.821932, 60.563563],          
-          zoom: 15,
-        });
+  // useEffect(() => {
+  //   console.log("mounted");
 
-        var myGeoObj = new ymaps.GeoObject({
-          geometry: {
-              type: "Point", // тип геометрии - точка
-              coordinates: [56.818710, 60.564902] // координаты точки
-          }
-        });
+  //   async function createMap() {
+  //     await ymaps.ready(function () {
+  //       var myMap = new ymaps.Map("YMapsID", {
+  //         center: [56.821932, 60.563563],
+  //         zoom: 15,
+  //       });
 
-      myMap.geoObjects.add(myGeoObj); 
+  //       var myGeoObj = new ymaps.GeoObject({
+  //         geometry: {
+  //           type: "Point", // тип геометрии - точка
+  //           coordinates: [56.81871, 60.564902], // координаты точки
+  //         },
+  //       });
 
-      console.log('myGeoObj', myGeoObj);
+  //       myMap.geoObjects.add(myGeoObj);
 
-      });
-      
-      console.log("ymaps", ymaps);
-    }
+  //       console.log("myGeoObj", myGeoObj);
+  //     });
 
-    createMap();
-    
-  }, []);
+  //     console.log("ymaps", ymaps);
+  //   }
+
+  //   createMap();
+  // }, []);
 
   return (
     <main>
-      <div className="card-container"></div>
+      <div className="card-container">
+        {pickPoints.map((pickPoint) => {
+          const { latitude, longitude, address, budgets } = pickPoint;
+         
+          const geoObj = {
+            latitude,
+            longitude,
+          };
+
+          return (
+            <Card
+              key={address}
+              title={address}
+              setPickupPoint={setCurrentPickupPoint}
+              geoObj={geoObj}
+            >
+              {budgets.map((badge) => (
+                <Badge className="badge" key={badge}>{badge}</Badge>
+              ))}
+            </Card>
+          );
+        })}
+      </div>
       <div className="map" id="YMapsID"></div>
     </main>
   );
 };
-
-// const App = ({ props }) => (
-//   <main>
-//     <div className="card-container"></div>
-//     <div className="map"></div>
-//   </main>
-// );
 
 export default App;
