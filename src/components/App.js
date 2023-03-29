@@ -9,51 +9,69 @@ console.log("pickPoints", pickPoints);
 
 const App = () => {
   const [currentPickupPoint, setCurrentPickupPoint] = useState({
-    latitude: 56.80245,
-    longitude: 60.604913,
+    latitude: pickPoints[0]["latitude"],
+    longitude: pickPoints[0]["longitude"],
+    address: pickPoints[0]["address"],
   });
+
+  let ymap, geoObj;
 
   useEffect(() => {
     console.log("currentPickupPoint", currentPickupPoint);
   });
 
-  // useEffect(() => {
-  //   console.log("mounted");
+  useEffect(() => {
+    console.log("mounted");
 
-  //   async function createMap() {
-  //     await ymaps.ready(function () {
-  //       var myMap = new ymaps.Map("YMapsID", {
-  //         center: [56.821932, 60.563563],
-  //         zoom: 15,
-  //       });
+    async function createMap() {
+      await ymaps.ready(function () {
+        ymap = new ymaps.Map("YMapsID", {
+          center: [
+            currentPickupPoint["latitude"],
+            currentPickupPoint["longitude"],
+          ],
+          zoom: 15,
+        });
 
-  //       var myGeoObj = new ymaps.GeoObject({
-  //         geometry: {
-  //           type: "Point", // тип геометрии - точка
-  //           coordinates: [56.81871, 60.564902], // координаты точки
-  //         },
-  //       });
+        geoObj = new ymaps.GeoObject({
+          geometry: {
+            type: "Point", // тип геометрии - точка
+            coordinates: [
+              currentPickupPoint["latitude"],
+              currentPickupPoint["longitude"],
+            ], // координаты точки
+          },
+        });
 
-  //       myMap.geoObjects.add(myGeoObj);
+        ymap.geoObjects.add(geoObj);
 
-  //       console.log("myGeoObj", myGeoObj);
-  //     });
+        console.log("geoObj", geoObj);
+      });
 
-  //     console.log("ymaps", ymaps);
-  //   }
+      console.log("ymaps", ymaps);
+    }
 
-  //   createMap();
-  // }, []);
+    createMap();
+
+    return () => {
+      console.log("unmounted");
+      ymap.destroy();
+      ymap = geoObj = null;
+      console.log("ymap unmounted", ymap);
+      console.log("geoObj unmounted", geoObj);
+    };
+  }, [currentPickupPoint]);
 
   return (
     <main>
       <div className="card-container">
         {pickPoints.map((pickPoint) => {
           const { latitude, longitude, address, budgets } = pickPoint;
-         
-          const geoObj = {
+
+          const pickupPointInfo = {
             latitude,
             longitude,
+            address,
           };
 
           return (
@@ -61,10 +79,13 @@ const App = () => {
               key={address}
               title={address}
               setPickupPoint={setCurrentPickupPoint}
-              geoObj={geoObj}
+              pickupPointInfo={pickupPointInfo}
+              currentPickupPoint={currentPickupPoint}
             >
               {budgets.map((badge) => (
-                <Badge className="badge" key={badge}>{badge}</Badge>
+                <Badge className="badge" key={badge}>
+                  {badge}
+                </Badge>
               ))}
             </Card>
           );

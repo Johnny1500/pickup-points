@@ -1,4 +1,5 @@
-html, body {  
+html,
+body {
   margin: 0px;
   padding: 0px;
 }
@@ -16,20 +17,18 @@ body {
 
 main {
   display: flex;
-  flex-direction: row;  
+  flex-direction: row;
   height: 100%;
   margin: 0;
 }
 
-.card-container {  
-  border: 2px dashed yellow;
-  flex: 1;  
+.card-container {
+  flex: 1;
 }
 
 .map {
-  margin: 14px 12px 14px 0px;  
-  border: 2px dashed green;
-  flex: 1
+  margin: 14px 12px 14px 0px;
+  flex: 1;
 }
 
 .card {
@@ -37,6 +36,7 @@ main {
   background-color: rgb(48, 56, 57);
   padding: 12px;
   margin: 14px 12px;
+  cursor: pointer;
 }
 
 .card-title {
@@ -44,12 +44,16 @@ main {
   color: rgb(3, 4, 4);
 }
 
+.current-card {
+  border: solid 2px rgb(139, 150, 155)
+}
+
 .badge {
   background-color: rgb(23, 35, 36);
   font-size: 14px;
   color: rgb(139, 150, 155);
   padding: 6px 10px;
-  margin-right: 12px; 
+  margin-right: 12px;
 }
 
 .badge-container {
