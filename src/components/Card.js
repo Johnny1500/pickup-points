@@ -1,5 +1,4 @@
-import React, { memo, useContext } from "react";
-import { GeoContext } from "./App";
+import React, { memo } from "react";
 
 const Card = ({
   children,

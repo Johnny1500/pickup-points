@@ -10,7 +10,8 @@ if (process.env.NODE_ENV === "production") {
 
 const plugins = [
   new HtmlWebpackPlugin({
-    template: "./src/index.html", // Данный html будет использован как шаблон
+    template: "./src/index.html",
+    favicon: "./src/favicon.png"
   }),
   new MiniCssExtractPlugin({
     filename: "[name].[contenthash].css",
@@ -42,9 +43,9 @@ module.exports = {
     rules: [
       { test: /\.(html)$/, use: ["html-loader"] },
       {
-        test: /\.(s[ac]|c)ss$/i, // /\.(le|c)ss$/i если вы используете less
+        test: /\.(s[ac]|c)ss$/i,
         use: [MiniCssExtractPlugin.loader, "css-loader", "sass-loader"],
-      }, //
+      },
       {
         test: /\.(jsx|js)$/,
         include: path.resolve(__dirname, "src"),
